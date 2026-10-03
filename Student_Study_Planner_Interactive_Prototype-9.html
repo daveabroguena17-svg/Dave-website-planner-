@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dave website</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#eef2f7;color:#172033}
+.phone{max-width:420px;min-height:760px;margin:20px auto;background:#fff;border-radius:28px;box-shadow:0 12px 40px #0002;overflow:hidden;position:relative}
+header{padding:28px 22px 18px;background:#173f8a;color:#fff}.brand{font-size:14px;opacity:.85}.title{font-size:27px;font-weight:700;margin-top:6px}
+main{padding:20px 18px 90px}.screen{display:none}.screen.active{display:block}
+.card{background:#f6f8fb;border:1px solid #dce3ee;border-radius:16px;padding:16px;margin:12px 0}
+.task-title{font-size:17px;font-weight:700}.muted{color:#647086;font-size:14px}.status{display:inline-block;margin-top:10px;padding:5px 9px;border-radius:99px;background:#e7eefc;color:#173f8a;font-size:12px;font-weight:700}
+.completed{background:#e8f7ed;color:#217a43}
+button{width:100%;border:0;border-radius:13px;padding:14px 16px;font-size:16px;font-weight:700;cursor:pointer;margin-top:12px;background:#173f8a;color:#fff}
+button.secondary{background:#e9edf4;color:#172033}button.success{background:#217a43}
+input{width:100%;padding:13px;border:1px solid #cdd6e4;border-radius:11px;margin:7px 0 14px;font-size:15px}
+label{font-size:13px;font-weight:700}.row{display:flex;justify-content:space-between;gap:10px}.row button{flex:1}
+nav{position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #e0e5ed;padding:12px 18px;display:flex;gap:8px}
+nav button{margin:0;padding:10px;font-size:13px;background:#edf1f7;color:#172033}
+.successbox{text-align:center;padding:24px 10px}.check{font-size:55px}
+.small{font-size:12px;color:#6b7688;margin-top:12px}
+</style></head><body>
+<div class="phone">
+<header><div class="brand">DAVE WEBSITE</div><div class="title" id="headerTitle">Welcome</div></header>
+<main>
+<section id="welcome" class="screen active"><h2>Stay on top of your schoolwork.</h2><p class="muted">Plan assignments, track deadlines, and finish tasks with less confusion.</p><button onclick="show('dashboard')">Continue</button></section>
+<section id="dashboard" class="screen"><h2>Upcoming Tasks</h2><div class="card"><div class="task-title">Database Laboratory Activity</div><div class="muted">Database Systems • Due Oct 6</div><span id="dashStatus" class="status">Upcoming</span></div><button onclick="show('add')">＋ Add Task</button></section>
+<section id="add" class="screen"><h2>Add Task</h2><label>Task Name</label><input id="task" placeholder="e.g., UI/UX Project"><label>Course</label><input id="course" placeholder="e.g., HCI"><label>Deadline</label><input id="date" type="date"><button onclick="saveTask()">Save Task</button><button class="secondary" onclick="show('dashboard')">Cancel</button></section>
+<section id="saved" class="screen"><div class="successbox"><div class="check">✓</div><h2>Task Saved</h2><p class="muted">Your task was added successfully.</p><button onclick="show('details')">View Task</button><button class="secondary" onclick="show('dashboard')">Back to Dashboard</button></div></section>
+<section id="details" class="screen"><h2>Task Details</h2><div class="card"><div class="task-title" id="detailTask">UI/UX Project</div><div class="muted" id="detailCourse">HCI</div><p id="detailDate" class="muted">Deadline not set</p><span id="detailStatus" class="status">Upcoming</span></div><button class="success" onclick="completeTask()">Mark Complete</button><button class="secondary" onclick="show('dashboard')">Back to Dashboard</button></section>
+<section id="completed" class="screen"><div class="successbox"><div class="check">✓</div><h2>Task Completed</h2><p class="muted">Nice work. The task is now marked as completed.</p><button onclick="show('dashboard')">Back to Dashboard</button></div></section>
+</main>
+<nav><button onclick="show('dashboard')">Dashboard</button><button onclick="show('add')">Add Task</button></nav>
+</div>
+<script>
+let taskName='UI/UX Project',courseName='HCI',dateName='';
+function show(id){document.querySelectorAll('.screen').forEach(x=>x.classList.remove('active'));document.getElementById(id).classList.add('active');
+let titles={welcome:'Welcome',dashboard:'Dashboard',add:'Add Task',saved:'Saved',details:'Task Details',completed:'Completed'};document.getElementById('headerTitle').textContent=titles[id]||'Dave website';}
+function saveTask(){taskName=document.getElementById('task').value||'UI/UX Project';courseName=document.getElementById('course').value||'HCI';dateName=document.getElementById('date').value||'Deadline not set';
+document.getElementById('detailTask').textContent=taskName;document.getElementById('detailCourse').textContent=courseName;document.getElementById('detailDate').textContent='Deadline: '+dateName;show('saved');}
+function completeTask(){document.getElementById('detailStatus').textContent='Completed';document.getElementById('detailStatus').classList.add('completed');document.getElementById('dashStatus').textContent='Completed';document.getElementById('dashStatus').classList.add('completed');show('completed');}
+</script></body></html>
